@@ -1,0 +1,46 @@
+{
+    "news" : [
+    {
+        "Title" : "Japan stun Ireland to pull off another famous Rugby World Cup upset",
+        "Category" : "Sport",
+        "Date" : "28.09.2019",
+        "Text" : "Japan have done it again, this time against the team ranked No 1 in the world two weeks ago. The World Cup hosts came from nine points down to win after playing with pace, skill and fervour that the humidity and time could not dim.",
+        "Author" : "Paul Rees"
+    },
+    {
+        "Title" : "Top 10 Health Conditions Affecting Millennials",
+        "Category" : "Health",
+        "Date" : "28.09.2019",
+        "Text" : "New research from the Blue Cross Blue Shield Association (BCBSA) suggests millennials may be substantially less healthy as they age. Millennials aged 34 to 36 in 2017 were 11 percent less healthy than Gen Xers aged 34 to 36 in 2014. Millennials have had a double digit increase in diagnoses for eight of the top 10 health conditions. When compared to the national population, millennials are more affected by behavioral health conditions than physical, with the highest increases shown in rates of major depression and hyperactivity.",
+        "Author" : "Cathy Cassata"
+    },
+    {
+        "Title" : "Rugby World Cup referees admit they have not been good enough",
+        "Category" : "Sport",
+        "Date" : "24.09.2019",
+        "Text" : "Match officials at the Rugby World Cup have shown themselves a yellow card after reviewing the opening round of matches. Referees, touch judges and television match officials met with Alain Rolland, World Rugby’s high performance manager for match officials, and agreed to go public with an admission that they should have done better.",
+        "Author" : "Paul Rees"
+    },
+    {
+        "Title" : "Fact-checking Trump's claims about the Bidens in China",
+        "Category" : "Politics",
+        "Date" : "27.09.2019",
+        "Text" : "Washington (CNN) - In attacking the Bidens, President Donald Trump has spent the majority of his time focusing on Ukraine, but he's also at times made vague allegations about the Bidens' ties to China. On several occasions, he has intimated that the Bidens have received millions of dollars from China, implying they capitalized on the then vice-president's political power and connections.",
+        "Author" : "Tara Subramaniam"
+    },
+    {
+        "Title" : "Blood Pressure Medication Recall Continues",
+        "Category" : "Health",
+        "Date" : "27.09.2019",
+        "Text" : "A pharmaceutical company has expanded the recall of its blood pressure medications — the latest development in a long list of recalls that have been happening for the past 14 months. Torrent Pharmaceuticals announcedTrusted Source last week that it was expanding its recall to an additional 3 lots of Losartan Potassium Tablets USP and 2 lots of Losartan Potassium/Hydrochlorothiazide Tablets, USP.",
+        "Author" : "Shawn Radcliffe"
+    },
+    {
+        "Title" : "USA coach refuses to bite after '15 Donald Trumps' remark by Eddie Jones",
+        "Category" : "Sport",
+        "Date" : "25.09.2019",
+        "Text" : "Gary Gold described England as a side with no detectable weaknesses but is confident his side will expose a few when they become the final team to debut in the tournament on Thursday night at the Kobe Misaki Stadium.",
+        "Author" : "Paul Rees"
+    }
+    ]
+}

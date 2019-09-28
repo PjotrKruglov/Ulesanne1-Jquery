@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=	, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/jquery-ui-dist/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="node_modules/popper.js/dist/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+    <script>
+    $( function() {
+      // initiate tooltip for [title]
+      var tooltips = $( "[title]" ).tooltip({
+        position: {
+          my: "left top",
+          at: "right+5 top-5",
+          collision: "none"
+        }
+      });
+
+      // data
+      var dialog, form,
+        title = $( "#title" ),
+        category = $( "#category" ),
+        date = $( "#date" ),
+        text = $( "#text" ),
+        author = $( "#author" ),
+        allFields = $( [] ).add( title ).add( category ).add( date ).add( text ).add( author ),
+        tips = $( ".validateTips" );
+
+      // on change tips
+      function updateTips( t ) {
+        tips
+          .text( t )
+          .addClass( "ui-state-highlight" );
+        setTimeout(function() {
+          tips.removeClass( "ui-state-highlight", 1500 );
+        }, 500 );
+      }
+
+      // check data
+      function checkLength( o, n, min, max ) {
+        if ( o.val().length > max || o.val().length < min ) {
+          o.addClass( "ui-state-error" );
+          updateTips( "Length of " + n + " must be between " +
+            min + " and " + max + "." );
+          return false;
+        } else {
+          return true;
+        }
+      }
+  
+      function checkRegexp( o, regexp, n ) {
+        if ( !( regexp.test( o.val() ) ) ) {
+          o.addClass( "ui-state-error" );
+          updateTips( n );
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function checkExist(o) { 
+        console.log(o);
+        if ($.inArray(o.val(), categories)!=-1) 
+          { return true; }
+        else { o.addClass( "ui-state-error" );
+          updateTips( "Category must already exist." );
+          return false; } 
+      }
+
+      // add news
+      function addNews() {
+
+                var valid = true;
+        allFields.removeClass( "ui-state-error" );
+        // check data
+        valid = valid && checkLength( title, "title", 5, 50 );
+        valid = valid && checkLength( category, "category", 0, 25 );
+        valid = valid && checkLength( date, "date", 10, 10 );
+        valid = valid && checkLength( text, "text", 10, 255 );
+        valid = valid && checkLength( author, "author", 1, 255 );
+  
+        valid = valid && checkRegexp( title, /^([0-9a-zA-Z._\s])+$/, "Title may consist of a-z, 0-9, underscores, spaces." );
+        valid = valid && checkRegexp( category, /^([0-9a-zA-Z._\s])+$/, "Category may consist of a-z, 0-9, underscores, spaces." );
+        valid = valid && checkRegexp( date, /^([0-9.\s])+$/, "Date may consist of 0-9 and dots." );
+        valid = valid && checkRegexp( text, /^([0-9a-zA-Z._\s])+$/, "Text may consist of a-z, 0-9, underscores, spaces." );
+        valid = valid && checkRegexp( author, /^([0-9a-zA-Z._\s])+$/, "Author may consist of a-z, 0-9, underscores, spaces." );
+
+        valid = valid && checkExist( category );
+  
+        //add data
+        if ( valid ) {
+          $("#accord"+category.val()+"").append('<h3>'+title.val()+'</h3><div><p>'+text.val()+'</p><small>'+author.val()+' '+date.val()+'</small></div>')
+          $("#accord"+category.val()+"").accordion("refresh");
+          dialog.dialog( "close" );
+        }
+        return valid;
+      }
+
+      // dialog form
+      dialog = $( "#dialog-form" ).dialog({
+        autoOpen: false,
+        height: 600,
+        width: 400,
+        modal: true,
+        buttons: {
+          "Create an article": addNews,
+          Cancel: function() {
+            dialog.dialog( "close" );
+          }
+        },
+        close: function() {
+          form[ 0 ].reset();
+          allFields.removeClass( "ui-state-error" );
+        }
+      });
+
+      // submit actions
+      form = dialog.find( "form" ).on( "submit", function( event ) {
+        event.preventDefault();
+        addNews();
+      });
+      // on button click
+      $( "#create-news" ).button().on( "click", function() {
+        dialog.dialog( "open" );
+      });
+    });
+    </script>
+    <title>News</title>
+</head>
+<body >
+    <button class="btn-primary btn-lg btn-block" id="create-news">Add news</button>
+    <div class = "accordion" id="accordion"></div>
+
+    <div id="dialog-form" title="Create new article">
+        <p class="validateTips">All form fields are required.</p>
+       
+        <form>
+          <fieldset>
+            <p>
+              <label for="title">Title</label>
+              <input type="text" name="title" id="title" value="..." class="text ui-widget-content ui-corner-all" title="Title of the article.">
+            </p>
+            <p>
+              <label for="category">Category</label>
+              <input type="text" name="category" id="category" value="..." class="text ui-widget-content ui-corner-all" title="Choose category of article from autocomplete.">
+            </p>
+            <p>
+              <label for="date">Date</label>
+              <input type="text" name="date" id="date" value="05.09.2019" class="text ui-widget-content ui-corner-all" title="Select revelant date.">
+            </p>
+            <p>
+              <label for="text">Text</label>
+              <input type="text" name="text" id="text" value="..." class="text ui-widget-content ui-corner-all" title="Input your message">
+            </p>
+            <p>
+              <label for="author">Author</label>
+              <input type="text" name="author" id="author" value="..." class="text ui-widget-content ui-corner-all" title="Provide the author of this article">
+            </p>
+       
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+          </fieldset>
+        </form>
+      </div>
+</body>
+<script>
+    var categories = [];
+    var news = [];
+    $(document).ready(function () {
+        
+        // read data
+        $.getJSON('news.json').done(function(data) 
+        {     
+          // push to array  
+          $.each(data.news, function(key, val){
+            if ($.inArray(val.Category, categories)==-1) categories.push(val.Category);
+          });
+          $.each(data.news, function(key, val){
+              news.push({title : val.Title, categ: val.Category, text: val.Text, date: val.Date, author: val.Author});
+          });
+          news.sort((a, b) => (a.title > b.title) ? 1 : -1);
+          categories.sort();
+          $( "#category" ).autocomplete({
+            source: categories
+          });
+          $.each(categories, function(index, value) {
+            $("#accordion").append('<h3>'+value+'</h3><div id ="accord'+value+'" class = "accord"></div>');
+          });
+          $.each(news, function(key, val){
+              $("#accord"+val.categ+"").append('<h3>'+val.title+'</h3><div><p>'+val.text+'</p><small>'+val.author+' '+val.date+'</small></div>');
+            })
+        }).done(function() {
+              $( ".accordion" ).accordion({
+                  header: "> h3:not(.item)",
+                  activate: function( event, ui ) {$( ".accord" ).accordion({active: false})},
+                  heightStyle: "content",
+                  active: false,
+                  collapsible: true
+              });
+              $( ".accord" ).accordion({
+                  header: "> h3:not(.item)",
+                  heightStyle: "content",
+                  active: false,
+                  collapsible: true
+              });
+            });
+          
+        // datepicker
+        $( "#date" ).datepicker();
+        $( "#date" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
+    });
+    </script>
+</html>
